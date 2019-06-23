@@ -1,4 +1,27 @@
 {
   "name": "md-links",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "dependencies": {
+    "filehound": "^1.17.0",
+    "marked": "^0.6.2"
+  },
+  "description": "[Markdown](https://es.wikipedia.org/wiki/Markdown) es un lenguaje de marcado\r ligero muy popular entre developers. Es usado en muchísimas plataformas que\r manejan texto plano (GitHub, foros, blogs, ...), y es muy común\r encontrar varios archivos en ese formato en cualquier tipo de repositorio\r (empezando por el tradicional `README.md`).",
+  "main": "index.js",
+  "directories": {
+    "test": "md-links.spec.js"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GelenMR/SCL009-md-links.git"
+  },
+  "author": "GelenMR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GelenMR/SCL009-md-links/issues"
+  },
+  "homepage": "https://github.com/GelenMR/SCL009-md-links#readme"
 }
