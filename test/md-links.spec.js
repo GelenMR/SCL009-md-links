@@ -126,4 +126,31 @@ describe('mdLinks', () => {
          ]
        ]);
    });
+
+  it('Deberia leer un archivo .md, retornar los links encontrados y validarlos', () =>{
+    expect(mdLinks('./prueba.md', '--validate')).resolves.toBe([
+      {
+        file: 'C:\\Users\\NUCLEOS\\Documents\\GitHub\\SCL009-md-links\\test\\prueba-md\\prueba.md',
+        herf: 'https://github.com/workshopper/learnyounode',
+        text: 'learnyounode',
+        status: 'OK',
+        code: 200
+      },
+      {
+        file: 'C:\\Users\\NUCLEOS\\Documents\\GitHub\\SCL009-md-links\\test\\prueba-md\\prueba.md',
+        herf: 'https://github.com/workshopper/how-to-npm',
+        text: 'how-to-npm',
+        status: 'OK',
+        code: 200
+      },
+      {
+        file: 'C:\\Users\\NUCLEOS\\Documents\\GitHub\\SCL009-md-links\\test\\prueba-md\\prueba.md',
+        herf: 'https://github.com/stevekane/promise-it-wont-hurt',
+        text: 'promise-it-wont-hurt',
+        status: 'OK',
+        code: 200
+      }
+    ]);
+  });
+
 })

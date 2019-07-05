@@ -121,19 +121,38 @@ const linksToValidate = (path) =>{
   return new Promise((resolve, reject) =>{
     isDirOrFile(path)
     .then(res=>{
-      // validateOption(res)
-      // .then(res=>{
-      //   resolve(res);
-      console.log(chalk.yellow('Ingreso Opción Validate.'), 'Links To Validate:', res);
-      // })
-      // .catch(err=>{
-      //   reject(err);
-      // })
+      validateOption(res)
+      .then(res=>{
+        resolve(res);
+        //console.log(chalk.yellow('Ingreso Opción Validate.'), 'Links To Validate:', res);
+      })
+      .catch(err=>{
+        reject(err);
+      })
     })
     .catch(err=>{
       reject(err);
     })
   })
+}
+
+// FUNCIÓN PARA EXTRAER INFO DEL LINK (PETICIÓN HTTP CON FETCH)
+const validateOption = (files) =>{
+  return Promise.all(files.map(links =>{
+    return Promise.all(links.map(link=>{
+      return new Promise((resolve,reject)=>{
+        fetch(link.herf)
+        .then(res=>{
+          link.status = res.statusText;
+          link.code = res.status;
+          resolve(link);
+        })
+        .catch(err=>{
+          reject(err);
+        })
+      })
+    }))
+  }))
 }
 
 // VERIFICAR SI EL USUARIO INTRODUJO OPTIONS
