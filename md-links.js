@@ -19,14 +19,14 @@ const isDirOrFile = (path) =>{
         }  
       }else if(stats.isDirectory()){
       console.log('Is Directory?', stats.isDirectory());
-        // readDir(path)
-        // .then(res =>{
+        readDir(path)
+        .then(res =>{
           console.log(chalk.blue('La Ruta Ingresda es un Directorio'));
-        //   resolve(res);
-        // })
-        // .catch(err =>{
-        //   reject(err);
-        // })
+          resolve(res);
+        })
+        .catch(err =>{
+          reject(err);
+        })
       }else{ 
         fileMD(path)
         .then(res =>{
@@ -87,6 +87,33 @@ const readFile = (files) =>{
       })
     })
   }))
+}
+
+// FUNCION LEER/RECORRER UN DIRECTORIO EN BUSCA DE ARCHIVOS .MD CON FILEHOUND
+const readDir = (path) =>{
+  return new Promise((resolve, reject) =>{
+    FileHound.create()
+    .paths(path)
+    .ext('md')
+    .find((err,files) =>{
+      console.log(chalk.green('Cantidad de archivos', files.length ));
+      if(files.length == 0){
+        console.log(chalk.red('No se encontraron Archivos .md'));
+      }
+    })
+   .then(files =>{
+      files.forEach(file =>{
+        readFile(files)
+        .then(res =>{
+          resolve(res);
+        })
+        .catch(err =>{
+            reject(err);
+        })
+      })
+      console.log('Archivos:', files);
+    })
+  })
 }
 const mdLinks = (path,option1,option2) =>{
   return new Promise((resolve, reject) =>{
