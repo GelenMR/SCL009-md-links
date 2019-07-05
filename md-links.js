@@ -115,9 +115,52 @@ const readDir = (path) =>{
     })
   })
 }
+
+// FUNCIÓN PARA EXTRAER LINKS A VALIDAR
+const linksToValidate = (path) =>{
+  return new Promise((resolve, reject) =>{
+    isDirOrFile(path)
+    .then(res=>{
+      // validateOption(res)
+      // .then(res=>{
+      //   resolve(res);
+      console.log(chalk.yellow('Ingreso Opción Validate.'), 'Links To Validate:', res);
+      // })
+      // .catch(err=>{
+      //   reject(err);
+      // })
+    })
+    .catch(err=>{
+      reject(err);
+    })
+  })
+}
+
+// VERIFICAR SI EL USUARIO INTRODUJO OPTIONS
+let validate = false;
+let stats = false;
 const mdLinks = (path,option1,option2) =>{
   return new Promise((resolve, reject) =>{
-    resolve(isDirOrFile(path));
+    if(option1 === undefined && option2 === undefined){
+      console.log(chalk.yellow('No Ingreso Opciones'));
+      resolve(isDirOrFile(path));
+    }else if(option1 === '--validate' && option2 === '--stats' || option1 === '--stats' && option2 === '--validate'){
+      validate = true;
+      stats = true;
+      console.log(chalk.yellow('Ingreso Opciones Validate y Stats'));
+      resolve();
+    }else if(option1 === '--validate' && option2 === undefined){
+      validate = true;
+      resolve(linksToValidate(path))
+    }else if(option1 === '--stats' && option2 === undefined){
+      stats = true;
+      console.log(chalk.yellow('Ingreso Opcion Stats'));
+      //resolve(statsOption(path));
+    }else{
+      console.log(chalk.red('Opcion No Valida.'),'Las Opciones validas son:\n --validate\n --stats\n --validate --stats');
+    }
+    console.log('Validate:', validate);
+    console.log('Stats:', stats);
   })
 }
 module.exports = mdLinks;
