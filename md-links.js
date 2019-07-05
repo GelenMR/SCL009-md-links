@@ -4,59 +4,93 @@ const fs = require('fs');
 const marked = require('marked');
 // libreria FILEHOUND para leer/recorrer directorios
 const FileHound = require('filehound');
+const path = require('path');
+const fetch = require('node-fetch');
+const chalk = require('chalk');
 
-/* GUARDA EN UNA VARIABLE EL ARGUMENTO QUE ESCRIBE EL USUARIO 
-EN LA TERMINAL(PATH) */
-let pathToFile = process.argv[2];
-console.log("path to file:", pathToFile);
-//console.log(`${index}: ${pathToFile}`);
-
-// // FUNCIÓN LEER ARCHIVO
-// const readFile = (path) => {
-//     fs.readFile(path,'utf8', (err, data) => {
-//         if (err){
-//         throw err;
-//         }
-//         console.log(data);
-//     })
-// }
-// console.log(readFile(pathToFile));
-
-//FUNCION PARA LEER ARCHIVO/LINKS Y CREAR ARRAY 
-// const links = (path) =>{
-//     fs.readFile(path,'utf8', (err, data) => {
-//         if (err){
-//         throw err;
-//         }
-//         let links = [];
-//         // metodo para que cree una nueva instancia en el array
-//         const renderer = new marked.Renderer();
-//         renderer.link = function (herf, title, text){
-//         links.push({
-//             herf:herf,
-//             text:text,
-//             file:path
-//             })
-//         }
-//     marked(data,{renderer:renderer});
-//     console.log(links)
-//     })
-// }
-// console.log(links(pathToFile));
-
-// FUNCION LEER/RECORRER UN DIRECTORIO EN BUSCA DE ARCHIVOS .MD CON FILEHOUND
-const readDir = (path) =>{
-    FileHound.create()
-    .paths(path)
-    .ext('md')
-    .find()
-   .then(readDir =>{
-    readDir.forEach(file =>console.log('Found file', file));
+// FUNCIÓN PARA SABER SI LA RUTA ES DIRECTORIO 
+const isDirOrFile = (path) =>{
+  return new Promise((resolve, reject) =>{
+    fs.lstat(path, (err, stats) =>{
+      if(err){
+        // VERIFICA SI LA RUTA/ARCHIVO EXISTE
+        if(err.code === 'ENOENT'){
+          console.log(chalk.red('Ruta No Valida. Por Favor, Ingresar Ruta Valida.'));
+        }  
+      }else if(stats.isDirectory()){
+      console.log('Is Directory?', stats.isDirectory());
+        // readDir(path)
+        // .then(res =>{
+          console.log(chalk.blue('La Ruta Ingresda es un Directorio'));
+        //   resolve(res);
+        // })
+        // .catch(err =>{
+        //   reject(err);
+        // })
+      }else{ 
+        fileMD(path)
+        .then(res =>{
+          console.log(chalk.blue('La Ruta Ingresda es un Archivo'));
+          resolve(res);
+        })
+        .catch(err =>{
+            reject(err);
+        })
+      }
+    })
   })
 }
-return(readDir(pathToFile));
 
-// FUNCIÓN QUE CONTIENE NUESTRO METODO
-const mdLinks = (path, options) =>{
-
+// FUNCIÓN QUE VERIFICA SI LA EXTECIÓN DEL ARCHIVO ES .MD
+const fileMD = (file) =>{
+  return new Promise((resolve, reject) =>{
+    // Extención de archivo
+    let ext = path.extname(file);
+    console.log(chalk.green('Este Archivo es:'), chalk.yellow(ext));
+    let arrayFile =[];
+    if(ext === '.md'){
+      arrayFile.push(file);
+      readFile(arrayFile)
+      .then(res=>{
+        resolve(res);
+      })
+      .catch(err =>{
+        reject(err);
+      })
+    }else{
+      reject(console.log(chalk.red('Error: el archivo No es .md'))); 
+    }
+  })
 }
+
+//FUNCION PARA LEER ARCHIVO/LINKS Y CREAR ARRAY 
+const readFile = (files) =>{
+  return Promise.all(files.map(file =>{
+    return new Promise ((resolve,reject) =>{
+      fs.readFile(file,'utf8', (err, data) => {
+        if (err){
+          reject(err);
+        }else{
+        let links = [];
+        // metodo para que cree una nueva instancia en el array
+        const renderer = new marked.Renderer();
+        renderer.link = function (herf, title, text){
+        links.push({
+          file:file,
+          herf:herf,
+          text:text
+        })
+        }
+        marked(data,{renderer:renderer});
+        resolve(links);
+        }
+      })
+    })
+  }))
+}
+const mdLinks = (path,option1,option2) =>{
+  return new Promise((resolve, reject) =>{
+    resolve(isDirOrFile(path));
+  })
+}
+module.exports = mdLinks;

@@ -1,0 +1,48 @@
+**En Readme escribir instrucciones para instalaci�n (comando md-links: npm install <github-user>/md-links) y uso
+1. Pedir al usuario ruta/archivo, si es valido continuar...
+2. Verificar si es un path absoluto, sino: convertir a absoluto y continuar...
+3. Buscar archivos dentro del directorio que sean *.md, si hay mas de uno enlistar para que el usuario seleccione y continuar...
+4. Leer archivo *.md y buscar links, si hay links guardar en arreglo (mediante promesa) y continuar...
+5. Mostrar links al usuario
+
+
+- leer del sistema de archivos, 
+- recibir argumentos a trav�s de la l�nea de comando, 
+- analizar texto, 
+- hacer consultas HTTP
+
+FLUJO:
+DONE:
+1.LEER LO QUE ESCRIBIO EL USUARIO Y GUARDARLO
+2.CHEQUEAR SI ES UNA RUTA VALIDA Y NORMALIZAR RUTA (ABSOLUTA)
+3.CHEQUEAR SI ES UN ARCHIVO O UN DIRECTORIO
+4.SI ES DIRECTORIO: RECORRER Y CREAR ARRAY CON NOMBRES DE RUTAS ENCONTRADAS
+5.SI ES ARCHIVO: VERIFICAR EXTENCION MD
+6.LEER ARCHIVOS .MD ENCONTRADOS
+7.CREAR ARRAY CON LINKS ENCONTRADOS EN ARCHIVOS
+
+8.VERIFICAR SI HAY OPTIONS
+8.1.HACER PROMESA LA FUNCI�N READFILE => RES=links
+9.SI VALIDATE ES TRUE Y STATS ES FALSE: APLICAR FETCH PARA HACER PETICI�N HTTP
+...
+12.CREAR FUNCI�N MD-LINKS (PROMESA) Y LLAMADO EN INDEX.JS (.THEN)
+
+DOING:
+10.SI STATS ES TRUE Y VALIDATE ES FALSE: CONTAR EL NRO DE LINKS, CONTAR LINKS UNIQUE, CONTAR LINKS BROKEN
+STAST=CONTAR EL NRO DE LINKS, CONTAR LINKS UNIQUE, CONTAR LINKS BROKEN
+...
+13.TEST
+14.GIT TAG
+
+TO DO:
+11.SI VALIDATE ES TRUE Y STATS ES TRUE: APLICAR PRIMERO FETCH PARA HACER PETICI�N HTTP Y 
+...
+15.README
+
+BLOCK:
+16.NPM PLUBLISH
+
+
+
+
+

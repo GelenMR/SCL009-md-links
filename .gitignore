@@ -3,4 +3,5 @@
 .nyc_output/
 coverage/
 node_modules/
-planificacion.txt
+prueba.js
+promesas.js
