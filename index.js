@@ -10,7 +10,7 @@ let pathToFile = process.argv[2];
 // Path Absoluto
 pathToFile = path.resolve(pathToFile);
 pathToFile = path.normalize(pathToFile);
-console.log(chalk.green('Path Absolute:', pathToFile));
+//console.log(chalk.green('Path Absolute:', pathToFile));
 // Argumeto en index 3
 let option1 = process.argv[3];
 //console.log('Option 1 to file:', option1);
