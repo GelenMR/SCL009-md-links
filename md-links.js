@@ -190,7 +190,7 @@ let stats = false;
 const mdLinks = (path,option1,option2) =>{
   return new Promise((resolve, reject) =>{
     if(option1 === undefined && option2 === undefined){
-      console.log(chalk.yellow('No Ingreso Opciones'));
+      //console.log(chalk.yellow('No Ingreso Opciones'));
       resolve(isDirOrFile(path));
     }else if(option1 === '--validate' && option2 === '--stats' || option1 === '--stats' && option2 === '--validate'){
       validate = true;

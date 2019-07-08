@@ -21,7 +21,7 @@ let option2 = process.argv[4];
 mdLinks(pathToFile, option1, option2)
     .then(res=>{
         //console.log(chalk.yellow('Links Encontrados - Index:',res));
-        console.log(chalk.yellow('Links Encontrados - Index:'),res);
+        console.log(chalk.yellow('Links Encontrados:'),res);
         if(res.length == 0){
           console.log(chalk.red('No se encontraron Links dentro del Archivo.'));
         }
