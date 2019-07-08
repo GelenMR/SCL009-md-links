@@ -18,11 +18,11 @@ const isDirOrFile = (path) =>{
           console.log(chalk.red('Ruta No Valida. Por Favor, Ingresar Ruta Valida.'));
         }  
       }else if(stats.isDirectory()){
-      console.log(chalk.blue('La Ruta Ingresda es un Directorio'));
+      //console.log(chalk.blue('La Ruta Ingresda es un Directorio'));
         readDir(path)
         .then(res =>{
           Promise.all(res.map(files =>{
-            console.log(chalk.blue(files));
+            //console.log(chalk.blue(files));
             return readFile(files);
           }))
           .then(res=>{
@@ -39,7 +39,7 @@ const isDirOrFile = (path) =>{
       }else{ 
         fileMD(path)
         .then(res =>{
-          console.log(chalk.blue('La Ruta Ingresda es un Archivo'));
+          //console.log(chalk.blue('La Ruta Ingresda es un Archivo'));
           resolve(res);
         })
         .catch(err =>{
@@ -55,7 +55,7 @@ const fileMD = (file) =>{
   return new Promise((resolve, reject) =>{
     // Extención de archivo
     let ext = path.extname(file);
-    console.log(chalk.green('Este Archivo es:'), chalk.yellow(ext));
+    //console.log(chalk.green('Este Archivo es:'), chalk.yellow(ext));
     if(ext === '.md'){
       readFile(file)
       .then(res=>{
@@ -120,7 +120,7 @@ const linksToValidate = (path) =>{
   return new Promise((resolve, reject) =>{
     isDirOrFile(path)
     .then(res=>{
-      console.log(chalk.yellow('Ingreso Opción Validate.'));
+      //console.log(chalk.yellow('Ingreso Opción Validate.'));
       validateOption(res)
       .then(res=>{
         resolve(res);
@@ -169,7 +169,7 @@ const statsOption = (path) =>{
       arrLinks = links.map(link =>link.herf)
       totalLinks = links.length;
       uniqueLinks = [...new Set(arrLinks)].length;
-      console.log(chalk.green('Links Totales:'), totalLinks, arrLinks)
+      //console.log(chalk.green('Links Totales:'), totalLinks, arrLinks)
       objectTotalLinks = {
         Total: totalLinks,
         Unique: uniqueLinks,
@@ -202,10 +202,10 @@ const mdLinks = (path,option1,option2) =>{
       resolve(linksToValidate(path))
     }else if(option1 === '--stats' && option2 === undefined){
       stats = true;
-      console.log(chalk.yellow('Ingreso Opcion Stats'));
+      //console.log(chalk.yellow('Ingreso Opcion Stats'));
       resolve(statsOption(path));
     }else{
-      console.log(chalk.red('Opcion No Valida.'),'Las Opciones validas son:\n --validate\n --stats\n --validate --stats');
+      console.log(chalk.red('Opcion No Valida.'),'Las Opciones validas son:\n --validate\n --stats');
     }
     // console.log('Validate:', validate);
     // console.log('Stats:', stats);
