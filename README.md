@@ -10,7 +10,7 @@ Este modulo permite _extraer links_ de archivos markdown(.md), _validar su statu
 # Guía de Uso e Instalación
 ## Uso
 ```js
-const md-links = require ( 'gelenmr-md-links' ) ;   
+const mdLinks = require ( 'gelenmr-md-links' ) ;   
 ```
 ## Instalación
 

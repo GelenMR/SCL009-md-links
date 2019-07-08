@@ -1,6 +1,6 @@
 {
-  "name": "md-links",
-  "version": "0.1.0",
+  "name": "gelenmr-md-links",
+  "version": "0.1.1",
   "dependencies": {
     "chalk": "^2.4.2",
     "eslint": "^6.0.0",
